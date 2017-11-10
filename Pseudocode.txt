@@ -1,0 +1,17 @@
+DONE: Capture image every x seconds
+
+DONE: Copy image
+
+DONE: Set up sliding window
+DONE: Set up DNN
+
+DONE: For each window:
+DONE:	classify whats in the window
+DONE:	Append predictions and window to array
+
+If windows overlap:
+	Display highest prediction (no duplicates)
+else:
+	Display highest prediction (duplicates)
+
+Send predictions to Pubnub

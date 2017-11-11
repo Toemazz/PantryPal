@@ -4,7 +4,7 @@ import cv2
 
 
 # Method: Used to slide across the image at a specified height
-def sliding_window(img, step_size=25, win_size=(200, 200), y_height=200):
+def sliding_window(img, step_size=20, win_size=(200, 200), y_height=0):
     img_height, img_width = int(img.shape[0]), int(img.shape[1])
 
     # Slide a window across the image
@@ -48,11 +48,15 @@ def get_overlapping_region(win_a, win_b, win_size):
 
 # File paths - GoogleNet
 model_path = 'models/bvlc_googlenet.caffemodel'
-image_path = 'images/pineapple.jpg'
+image_path = 'images/fruit.jpg'
 labels_path = 'synset_words.txt'
 prototxt_path = 'models/bvlc_googlenet.prototxt'
-win_size = (200, 200)
 image_data = [[]]
+
+# Sliding window variables
+step_size = 20
+win_size = (120, 120)
+y_height = 0
 
 # Load labels
 rows = open(labels_path).read().strip().split("\n")
@@ -64,23 +68,22 @@ image = cv2.imread(image_path)
 image = image.copy()
 print('[INFO]: Image loaded')
 
-# CNN required fixed dimensions for our input image (224x224)
-# Mean subtraction is performed to normalize the input (104, 117, 123)
-blob = cv2.dnn.blobFromImage(image, 1, (224, 224), (104, 117, 123))
-print('[INFO]: Blob generated')
-
 # Load model
 net = cv2.dnn.readNetFromCaffe(prototxt_path, model_path)
 print('[INFO]: Model loaded')
 
-# Set the blob as an input to the network
-net.setInput(blob)
-
 # Slide across the image
-for (x, y, window) in sliding_window(image, step_size=25, win_size=win_size):
+for (x, y, window) in sliding_window(image, step_size=step_size, win_size=win_size, y_height=y_height):
     # If the window does not meet our desired window size, ignore it
     if window.shape[0] != win_size[0] or window.shape[1] != win_size[1]:
         continue
+
+    # CNN required fixed dimensions for our input image (227x227)
+    # Mean subtraction is performed to normalize the input (104, 117, 123)
+    blob = cv2.dnn.blobFromImage(window, 1, (227, 227), (104, 117, 123))
+
+    # Set the blob as an input to the network
+    net.setInput(blob)
 
     # Perform a forward-pass to obtain our output classification
     predictions = net.forward()
@@ -112,6 +115,6 @@ for (x, y, window) in sliding_window(image, step_size=25, win_size=win_size):
     time.sleep(0.025)
     # ---------------
 
-    if x + win_size[0] == image.shape[1]:
+    if (x+win_size[0]+step_size) >= image.shape[1]:
         print('[INFO]: Finished')
         break

@@ -46,18 +46,43 @@ def get_overlapping_region(win_a, win_b, win_size):
     return x, y, size
 
 
+# Method: Used to find the highest confidences for each unique class prediction
+def find_max_confidence_for_unique_labels(labels, confidences):
+    unique_labels = list(set(labels))
+    unique_max_conf = np.zeros(len(unique_labels))
+
+    for i, label in enumerate(labels):
+        for j, unique_label in enumerate(unique_labels):
+            if unique_label is label:
+                # Check for highest conf
+                if unique_max_conf[j] <= confidences[i]:
+                    unique_max_conf[j] = confidences[i]
+                    break
+
+    return unique_labels, unique_max_conf
+
+
+# Method: Used to draw boxes around classified food items
+def draw_boxes_for_unique_labels(labels, confidences, windows):
+    # TODO
+    pass
+
+
+# Start time
+start_time = time.time()
+
 # File paths - GoogleNet
 model_path = 'models/bvlc_googlenet.caffemodel'
-image_path = 'images/fruit.jpg'
-labels_path = 'synset_words.txt'
+image_path = 'images/image4.jpg'
+labels_path = 'image_net_labels.txt'
 prototxt_path = 'models/bvlc_googlenet.prototxt'
 image_data = [[]]
 prediction_labels, prediction_confs, prediction_winds = [], [], []
 
 # Sliding window variables
 step_size = 20
-win_size = (120, 120)
-y_height = 0
+win_size = (500, 500)
+y_height = 150
 
 # Load labels
 rows = open(labels_path).read().strip().split("\n")
@@ -99,17 +124,28 @@ for (x, y, window) in sliding_window(image, step_size=step_size, win_size=win_si
     prediction_winds.append((x, y, win_size))
 
     # -- DELETE ME --
-    # clone = image.copy()
-    # cv2.rectangle(clone, (x, y), (x + win_size[0], y + win_size[1]), (0, 255, 0), 2)
-    # cv2.imshow("Window", clone)
-    # cv2.waitKey(1)
-    # time.sleep(0.025)
+    clone = image.copy()
+    cv2.rectangle(clone, (x, y), (x + win_size[0], y + win_size[1]), (0, 255, 0), 2)
+    cv2.imshow("Window", clone)
+    cv2.waitKey(1)
+    time.sleep(0.025)
     # ---------------
 
+    # Ensure sliding window only slides across the shelf once
     if (x+win_size[0]+step_size) >= image.shape[1]:
         print('[INFO]: Finished')
         break
 
 
-print(prediction_confs.index(max(prediction_confs)))
-print(prediction_labels[16], prediction_confs[16])
+msg_labels, msg_confs = find_max_confidence_for_unique_labels(prediction_labels, prediction_confs)
+
+# Generate PubNub message
+msg = ''
+for i in range(len(msg_labels)):
+    msg += str(msg_labels[i]) + '_' + str('{0:.2f}%'.format(float(msg_confs[i]))) + '\n'
+
+print(msg)
+
+# Calculate total execution time
+total_time = time.time() - start_time
+print('Execution time: {0:.2f}s'.format(total_time))

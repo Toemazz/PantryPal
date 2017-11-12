@@ -52,6 +52,7 @@ image_path = 'images/fruit.jpg'
 labels_path = 'synset_words.txt'
 prototxt_path = 'models/bvlc_googlenet.prototxt'
 image_data = [[]]
+prediction_labels, prediction_confs, prediction_winds = [], [], []
 
 # Sliding window variables
 step_size = 20
@@ -93,28 +94,22 @@ for (x, y, window) in sliding_window(image, step_size=step_size, win_size=win_si
     top_prediction_index = int(np.argsort(predictions[0])[::-1][:1])
 
     # Prediction information for each window
-    prediction_label = classes[top_prediction_index]
-    prediction_conf = predictions[0][top_prediction_index]*100
-    prediction_wind = (x, y, window)
-
-    # Add prediction data to image data array
-    image_data.append([str(prediction_label), float(prediction_conf), tuple(prediction_wind)])
-
-    window_info = "{} {:.2f}".format(classes[top_prediction_index], predictions[0][top_prediction_index]*100)
-    print(window_info)
-
-    # THIS IS WHERE YOU WOULD PROCESS YOUR WINDOW, SUCH AS APPLYING A
-    # MACHINE LEARNING CLASSIFIER TO CLASSIFY THE CONTENTS OF THE
-    # WINDOW
+    prediction_labels.append(classes[top_prediction_index])
+    prediction_confs.append(predictions[0][top_prediction_index]*100)
+    prediction_winds.append((x, y, win_size))
 
     # -- DELETE ME --
-    clone = image.copy()
-    cv2.rectangle(clone, (x, y), (x + win_size[0], y + win_size[1]), (0, 255, 0), 2)
-    cv2.imshow("Window", clone)
-    cv2.waitKey(1)
-    time.sleep(0.025)
+    # clone = image.copy()
+    # cv2.rectangle(clone, (x, y), (x + win_size[0], y + win_size[1]), (0, 255, 0), 2)
+    # cv2.imshow("Window", clone)
+    # cv2.waitKey(1)
+    # time.sleep(0.025)
     # ---------------
 
     if (x+win_size[0]+step_size) >= image.shape[1]:
         print('[INFO]: Finished')
         break
+
+
+print(prediction_confs.index(max(prediction_confs)))
+print(prediction_labels[16], prediction_confs[16])

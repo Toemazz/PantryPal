@@ -2,21 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="70aeb9a0-a649-48dd-87c8-19cd8788dbaa" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/barbershop.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/cobra.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/corona.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/jellyfish.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/lemon.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/lemon.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/pepper.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/pineapple.jpeg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/pineapple.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/pizza.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/wine.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/zebra.jpg" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PantryPal.py" afterPath="$PROJECT_DIR$/PantryPal.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/synset_words.txt" afterPath="$PROJECT_DIR$/synset_words.txt" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -31,15 +18,15 @@
     <SUITE FILE_PATH="coverage/PantryPal$sliding_window.coverage" NAME="sliding_window Coverage Results" MODIFIED="1510329356353" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PantryPal$dnn.coverage" NAME="dnn Coverage Results" MODIFIED="1510330344152" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PantryPal$Test.coverage" NAME="Test Coverage Results" MODIFIED="1510401204810" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/PantryPal$PantryPal.coverage" NAME="PantryPal Coverage Results" MODIFIED="1510409277920" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PantryPal$PantryPal.coverage" NAME="PantryPal Coverage Results" MODIFIED="1510489659350" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="PantryPal.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="PantryPal.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/PantryPal.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="143">
-              <caret line="51" column="31" lean-forward="false" selection-start-line="51" selection-start-column="31" selection-end-line="51" selection-end-column="31" />
+            <state relative-caret-position="451">
+              <caret line="115" column="0" lean-forward="true" selection-start-line="115" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
                 <element signature="e#183#496#0" expanded="false" />
@@ -50,21 +37,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Test.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Test.py">
+      <file leaf-file-name="Pseudocode.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Pseudocode.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="506">
-              <caret line="36" column="26" lean-forward="false" selection-start-line="36" selection-start-column="26" selection-end-line="36" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="synset_words.txt" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/synset_words.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
-              <caret line="948" column="15" lean-forward="false" selection-start-line="948" selection-start-column="15" selection-end-line="948" selection-end-column="15" />
+            <state relative-caret-position="330">
+              <caret line="15" column="34" lean-forward="true" selection-start-line="15" selection-start-column="34" selection-end-line="15" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -101,8 +78,8 @@
         <option value="$PROJECT_DIR$/dnn.py" />
         <option value="$PROJECT_DIR$/Test.py" />
         <option value="$PROJECT_DIR$/Pseudocode.txt" />
-        <option value="$PROJECT_DIR$/PantryPal.py" />
         <option value="$PROJECT_DIR$/synset_words.txt" />
+        <option value="$PROJECT_DIR$/PantryPal.py" />
       </list>
     </option>
   </component>
@@ -133,8 +110,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -151,6 +126,8 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -314,7 +291,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31378764" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31378764" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
@@ -363,6 +340,19 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/PantryPal.py">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#183#496#0" expanded="false" />
+            <element signature="e#611#998#0" expanded="false" />
+            <element signature="e#1128#1598#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PantryPal.py">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="462">
           <caret line="52" column="48" lean-forward="false" selection-start-line="52" selection-start-column="48" selection-end-line="52" selection-end-column="48" />
           <folding>
@@ -378,7 +368,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="264">
           <caret line="36" column="26" lean-forward="false" selection-start-line="36" selection-start-column="26" selection-end-line="36" selection-end-column="26" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -426,11 +415,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/images/barbershop.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/images/barbershop.png" />
     <entry file="file://$PROJECT_DIR$/pyimagesearch/helpers/SlidingWindow.py" />
     <entry file="file://$PROJECT_DIR$/OLD/pyramid.py" />
     <entry file="file://$PROJECT_DIR$/OLD/helpers.py" />
@@ -438,6 +423,20 @@
     <entry file="file://$PROJECT_DIR$/sliding_window.py" />
     <entry file="file://$PROJECT_DIR$/PantryPal_Working.py" />
     <entry file="file://$PROJECT_DIR$/dnn.py" />
+    <entry file="file://$PROJECT_DIR$/synset_words.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="948" column="15" lean-forward="false" selection-start-line="948" selection-start-column="15" selection-end-line="948" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="506">
+          <caret line="36" column="26" lean-forward="false" selection-start-line="36" selection-start-column="26" selection-end-line="36" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Pseudocode.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
@@ -448,30 +447,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/PantryPal.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="143">
-          <caret line="51" column="31" lean-forward="false" selection-start-line="51" selection-start-column="31" selection-end-line="51" selection-end-column="31" />
+        <state relative-caret-position="451">
+          <caret line="115" column="0" lean-forward="true" selection-start-line="115" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
             <element signature="e#183#496#0" expanded="false" />
             <element signature="e#611#998#0" expanded="false" />
             <element signature="e#1128#1598#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
-          <caret line="36" column="26" lean-forward="false" selection-start-line="36" selection-start-column="26" selection-end-line="36" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/synset_words.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="948" column="15" lean-forward="false" selection-start-line="948" selection-start-column="15" selection-end-line="948" selection-end-column="15" />
-          <folding />
         </state>
       </provider>
     </entry>

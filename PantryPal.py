@@ -63,9 +63,12 @@ def find_max_confidence_for_unique_labels(labels, confidences):
 
 
 # Method: Used to draw boxes around classified food items
-def draw_boxes_for_unique_labels(labels, confidences, windows):
-    # TODO
-    pass
+def draw_boxes_for_unique_labels(top_confidences, confidences, labels, windows):
+    for i, confidence in enumerate(confidences):
+        for j, top_confidence in enumerate(top_confidences):
+            if confidence == top_confidence:
+                # TODO: Draw boxes on image here
+                print(labels[i], windows[i])
 
 
 # Start time
@@ -139,12 +142,16 @@ for (x, y, window) in sliding_window(image, step_size=step_size, win_size=win_si
 
 msg_labels, msg_confs = find_max_confidence_for_unique_labels(prediction_labels, prediction_confs)
 
+draw_boxes_for_unique_labels(top_confidences=msg_confs,
+                             confidences=prediction_confs,
+                             labels=prediction_labels,
+                             windows=prediction_labels)
+
 # Generate PubNub message
 msg = ''
 for i in range(len(msg_labels)):
     msg += str(msg_labels[i]) + '_' + str('{0:.2f}%'.format(float(msg_confs[i]))) + '\n'
 
-print(msg)
 
 # Calculate total execution time
 total_time = time.time() - start_time

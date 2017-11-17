@@ -1,6 +1,7 @@
 import cv2
 import time
 import numpy as np
+import Dropbox as db
 
 
 # Method: Used to slide across the image at a specified height
@@ -37,10 +38,22 @@ def draw_boxes_for_unique_labels(img, top_confidences, confidences, labels, wind
                 wind = windows[i]
                 x, y, size = wind[0], wind[1], wind[2]
                 cv2.rectangle(img=img, pt1=(x, y), pt2=(x+size[0], y+size[1]), color=(0, 255, 0))
-                cv2.putText(img=img, text=labels[i], org=(x, y), color=(0, 255, 0),
-                            fontFace=cv2.FONT_HERSHEY_PLAIN, fontScale=1)
+                cv2.putText(img=img, text='{}: {:.2f}'.format(labels[i], float(confidences[i])), org=(x, y),
+                            color=(0, 255, 0), fontFace=cv2.FONT_HERSHEY_PLAIN, fontScale=1)
 
     cv2.imwrite("image.jpg", img)
+
+
+# Method: Used to send a string with the predictions to PubNub
+def send_message_to_pubnub(top_labels, top_confs):
+    pubnub_msg = ''
+
+    # Generate PubNub message
+    for i in range(len(top_labels)):
+        pubnub_msg += str(top_labels[i]) + '_' + str('{0:.2f}%'.format(float(top_confs[i]))) + '\n'
+
+    # TODO: Figure out how to send the string to PubNub
+    print(pubnub_msg)
 
 
 # Start time
@@ -55,7 +68,6 @@ prototxt_path = 'models/bvlc_googlenet.prototxt'
 # Other variables
 prediction_labels, prediction_confs, prediction_winds = [], [], []
 display = True
-pubnub_msg = ''
 
 # Load labels
 rows = open(labels_path).read().strip().split("\n")
@@ -115,10 +127,13 @@ draw_boxes_for_unique_labels(img=image,
                              labels=prediction_labels,
                              windows=prediction_winds)
 
-# Generate PubNub message
-for i in range(len(msg_labels)):
-    pubnub_msg += str(msg_labels[i]) + '_' + str('{0:.2f}%'.format(float(msg_confs[i]))) + '\n'
-print(pubnub_msg)
+# Upload classified file to DropBox
+db.upload_files(local_dir='output/',
+                dbox_dir='/')
+
+# Send prediction to pubnub
+send_message_to_pubnub(top_labels=msg_labels,
+                       top_confs=msg_confs)
 
 # Calculate total execution time
 total_time = time.time() - start_time

@@ -7,7 +7,7 @@ import logging
 import dropbox
 from dropbox.files import FileMetadata
 
-logging.basicConfig(filename="PlasmaDevice.log", level=logging.INFO)
+logging.basicConfig(filename="PantryPal.log", level=logging.INFO)
 
 
 # Method: Used to get the DropBox token for accessing remote directory
@@ -108,7 +108,7 @@ def upload_files(local_dir, dbox_dir):
         print("No files in the directory to be uploaded to DropBox")
     else:
         for up_file in up_files:
-            path = os.path.join(dbox_dir, up_file)
+            path = os.path.join(dbox_dir, os.path.basename(up_file))
             if "//" in path:
                 path = path.replace("//", "/")
             if "\\" in path:

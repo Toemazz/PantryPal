@@ -2,13 +2,14 @@ import cv2
 import time
 import numpy as np
 import Dropbox as db
+from string import capwords
 
 
 # Method: Used to slide across the image at a specified height
-def sliding_window(img, step_size=20, win_size=(200, 200)):
+def sliding_window(img, step_size=20, win_size=(200, 200), crop_size=(200, 200)):
     # Slide a window across the image
-    for y in range(0, img.shape[0], step_size):
-        for x in range(0, img.shape[1], step_size):
+    for y in np.arange(crop_size[0], img.shape[0]-crop_size[0], step_size):
+        for x in np.arange(crop_size[1], img.shape[1]-crop_size[1], step_size):
             # Yield the current window
             yield (x, y, img[y:y + win_size[1], x:x + win_size[0]])
 
@@ -41,7 +42,7 @@ def draw_boxes_for_unique_labels(img, top_confidences, confidences, labels, wind
                 cv2.putText(img=img, text='{}: {:.2f}'.format(labels[i], float(confidences[i])), org=(x, y),
                             color=(0, 255, 0), fontFace=cv2.FONT_HERSHEY_PLAIN, fontScale=1)
 
-    cv2.imwrite("image.jpg", img)
+    cv2.imwrite("output/pantry.jpg", img)
 
 
 # Method: Used to send a string with the predictions to PubNub
@@ -49,8 +50,8 @@ def send_message_to_pubnub(top_labels, top_confs):
     pubnub_msg = ''
 
     # Generate PubNub message
-    for i in range(len(top_labels)):
-        pubnub_msg += str(top_labels[i]) + '_' + str('{0:.2f}%'.format(float(top_confs[i]))) + '\n'
+    for i in np.arange(len(top_labels)):
+        pubnub_msg += capwords(top_labels[i]) + ','
 
     # TODO: Figure out how to send the string to PubNub
     print(pubnub_msg)
@@ -67,7 +68,7 @@ prototxt_path = 'models/bvlc_googlenet.prototxt'
 
 # Other variables
 prediction_labels, prediction_confs, prediction_winds = [], [], []
-display = True
+display = False
 
 # Load labels
 rows = open(labels_path).read().strip().split("\n")
@@ -128,12 +129,10 @@ draw_boxes_for_unique_labels(img=image,
                              windows=prediction_winds)
 
 # Upload classified file to DropBox
-# db.upload_files(local_dir='output/',
-#                 dbox_dir='/')
+db.upload_files(local_dir='C://PythonProjects/PantryPal/output/', dbox_dir='/')
 
-# Send prediction to pubnub
-send_message_to_pubnub(top_labels=msg_labels,
-                       top_confs=msg_confs)
+# Send prediction to PubNub
+send_message_to_pubnub(top_labels=msg_labels, top_confs=msg_confs)
 
 # Calculate total execution time
 total_time = time.time() - start_time

@@ -128,8 +128,8 @@ draw_boxes_for_unique_labels(img=image,
                              windows=prediction_winds)
 
 # Upload classified file to DropBox
-db.upload_files(local_dir='output/',
-                dbox_dir='/')
+# db.upload_files(local_dir='output/',
+#                 dbox_dir='/')
 
 # Send prediction to pubnub
 send_message_to_pubnub(top_labels=msg_labels,

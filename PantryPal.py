@@ -1,49 +1,15 @@
-import numpy as np
-import time
 import cv2
+import time
+import numpy as np
 
 
 # Method: Used to slide across the image at a specified height
-def sliding_window(img, step_size=20, win_size=(200, 200), y_height=0):
-    img_height, img_width = int(img.shape[0]), int(img.shape[1])
-
+def sliding_window(img, step_size=20, win_size=(200, 200)):
     # Slide a window across the image
-    for y in range(0, img_height, step_size):
-        for x in range(0, img_width, step_size):
+    for y in range(0, img.shape[0], step_size):
+        for x in range(0, img.shape[1], step_size):
             # Yield the current window
-            yield (x, y_height, image[y:y + win_size[1], x:x + win_size[0]])
-
-
-# Method: Used to check if two sliding windows overlap
-def is_overlap_between_windows(win_a, win_b, win_size):
-    """
-    :param win_a: Sliding window a
-    :param win_b: Sliding window b
-    :param win_size: Sliding window size
-    :return: True if overlap, else False
-    """
-    if win_a[0] > (win_b[0] + win_size[0]) or win_b[0] > (win_a[0] + win_size[0]):
-        return False
-    if win_a[1] > (win_b[1] + win_size[1]) or win_b[1] > (win_a[1] + win_size[1]):
-        return False
-    return True
-
-
-# Method: Used to return the region of overlap between sliding windows
-def get_overlapping_region(win_a, win_b, win_size):
-    """
-    :param win_a: Sliding window a
-    :param win_b: Sliding window b
-    :param win_size: Sliding window size
-    :return: Overlapping region
-    """
-    if not is_overlap_between_windows(win_a, win_b, win_size):
-        return None, None, None
-
-    x, y = max(win_a[0], win_b[0]), max(win_a[1], win_b[1])
-    size = (min(win_a[0] + win_size[0], win_b[0] + win_size[0]) - x,
-            min(win_a[1] + win_size[1], win_b[1] + win_size[1]) - y)
-    return x, y, size
+            yield (x, y, img[y:y + win_size[1], x:x + win_size[0]])
 
 
 # Method: Used to find the highest confidences for each unique class prediction
@@ -63,12 +29,18 @@ def find_max_confidence_for_unique_labels(labels, confidences):
 
 
 # Method: Used to draw boxes around classified food items
-def draw_boxes_for_unique_labels(top_confidences, confidences, labels, windows):
+def draw_boxes_for_unique_labels(img, top_confidences, confidences, labels, windows):
     for i, confidence in enumerate(confidences):
         for j, top_confidence in enumerate(top_confidences):
             if confidence == top_confidence:
-                # TODO: Draw boxes on image here
-                print(labels[i], windows[i])
+                # Draw boxes (with text) around top predictions
+                wind = windows[i]
+                x, y, size = wind[0], wind[1], wind[2]
+                cv2.rectangle(img=img, pt1=(x, y), pt2=(x+size[0], y+size[1]), color=(0, 255, 0))
+                cv2.putText(img=img, text=labels[i], org=(x, y), color=(0, 255, 0),
+                            fontFace=cv2.FONT_HERSHEY_PLAIN, fontScale=1)
+
+    cv2.imwrite("image.jpg", img)
 
 
 # Start time
@@ -79,13 +51,11 @@ model_path = 'models/bvlc_googlenet.caffemodel'
 image_path = 'images/image4.jpg'
 labels_path = 'image_net_labels.txt'
 prototxt_path = 'models/bvlc_googlenet.prototxt'
-image_data = [[]]
-prediction_labels, prediction_confs, prediction_winds = [], [], []
 
-# Sliding window variables
-step_size = 20
-win_size = (500, 500)
-y_height = 150
+# Other variables
+prediction_labels, prediction_confs, prediction_winds = [], [], []
+display = True
+pubnub_msg = ''
 
 # Load labels
 rows = open(labels_path).read().strip().split("\n")
@@ -101,57 +71,54 @@ print('[INFO]: Image loaded')
 net = cv2.dnn.readNetFromCaffe(prototxt_path, model_path)
 print('[INFO]: Model loaded')
 
-# Slide across the image
-for (x, y, window) in sliding_window(image, step_size=step_size, win_size=win_size, y_height=y_height):
-    # If the window does not meet our desired window size, ignore it
-    if window.shape[0] != win_size[0] or window.shape[1] != win_size[1]:
-        continue
+for win_size in [(150, 150), (225, 225), (300, 300)]:  # Sorry, not sorry! (far from ideal)
+    for (x, y, window) in sliding_window(image, step_size=100, win_size=win_size):
+        # If the window does not meet our desired window size, ignore it
+        if window.shape[0] != win_size[0] or window.shape[1] != win_size[1]:
+            continue
 
-    # CNN required fixed dimensions for our input image (227x227)
-    # Mean subtraction is performed to normalize the input (104, 117, 123)
-    blob = cv2.dnn.blobFromImage(window, 1, (227, 227), (104, 117, 123))
+        # GoogleNet CNN required fixed dimensions for our input image (224x224)
+        # Mean subtraction is performed to normalize the input (104, 117, 123)
+        blob = cv2.dnn.blobFromImage(window, 1, (224, 224), (104, 117, 123))
 
-    # Set the blob as an input to the network
-    net.setInput(blob)
+        # Set the blob as an input to the network
+        net.setInput(blob)
 
-    # Perform a forward-pass to obtain our output classification
-    predictions = net.forward()
+        # Perform a forward-pass to obtain our output classification
+        predictions = net.forward()
 
-    # Get top prediction
-    predictions = predictions.reshape((1, len(classes)))
-    top_prediction_index = int(np.argsort(predictions[0])[::-1][:1])
+        # Get top prediction
+        predictions = predictions.reshape((1, len(classes)))
+        top_prediction_index = int(np.argsort(predictions[0])[::-1][:1])
 
-    # Prediction information for each window
-    prediction_labels.append(classes[top_prediction_index])
-    prediction_confs.append(predictions[0][top_prediction_index]*100)
-    prediction_winds.append((x, y, win_size))
+        # Only save prediction information if prediction confidence is > 60%
+        if predictions[0][top_prediction_index] > 0.6:
+            prediction_labels.append(classes[top_prediction_index])
+            prediction_confs.append(predictions[0][top_prediction_index] * 100)
+            prediction_winds.append((x, y, win_size))
 
-    # -- DELETE ME --
-    clone = image.copy()
-    cv2.rectangle(clone, (x, y), (x + win_size[0], y + win_size[1]), (0, 255, 0), 2)
-    cv2.imshow("Window", clone)
-    cv2.waitKey(1)
-    time.sleep(0.025)
-    # ---------------
+        # Decide to display sliding window illustration or not
+        if display:
+            clone = image.copy()
+            cv2.rectangle(clone, (x, y), (x + win_size[0], y + win_size[1]), (0, 255, 0), 2)
+            cv2.imshow("Window", clone)
+            cv2.waitKey(1)
+            time.sleep(0.025)
 
-    # Ensure sliding window only slides across the shelf once
-    if (x+win_size[0]+step_size) >= image.shape[1]:
-        print('[INFO]: Finished')
-        break
-
-
+# Get the labels to be sent to
 msg_labels, msg_confs = find_max_confidence_for_unique_labels(prediction_labels, prediction_confs)
 
-draw_boxes_for_unique_labels(top_confidences=msg_confs,
+# Draw boxes for top predictions on the image
+draw_boxes_for_unique_labels(img=image,
+                             top_confidences=msg_confs,
                              confidences=prediction_confs,
                              labels=prediction_labels,
-                             windows=prediction_labels)
+                             windows=prediction_winds)
 
 # Generate PubNub message
-msg = ''
 for i in range(len(msg_labels)):
-    msg += str(msg_labels[i]) + '_' + str('{0:.2f}%'.format(float(msg_confs[i]))) + '\n'
-
+    pubnub_msg += str(msg_labels[i]) + '_' + str('{0:.2f}%'.format(float(msg_confs[i]))) + '\n'
+print(pubnub_msg)
 
 # Calculate total execution time
 total_time = time.time() - start_time

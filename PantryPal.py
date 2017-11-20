@@ -7,6 +7,13 @@ from string import capwords
 
 # Method: Used to slide across the image at a specified height
 def sliding_window(img, step_size=20, win_size=(200, 200), crop_size=(200, 200)):
+    """
+    :param img: Image file
+    :param step_size: Step size
+    :param win_size: Window size
+    :param crop_size: Area of the image for the window to slide over
+    :return: (x, y, window)
+    """
     # Slide a window across the image
     for y in np.arange(crop_size[0], img.shape[0]-crop_size[0], step_size):
         for x in np.arange(crop_size[1], img.shape[1]-crop_size[1], step_size):
@@ -14,8 +21,13 @@ def sliding_window(img, step_size=20, win_size=(200, 200), crop_size=(200, 200))
             yield (x, y, img[y:y + win_size[1], x:x + win_size[0]])
 
 
-# Method: Used to find the highest confidences for each unique class prediction
-def find_max_confidence_for_unique_labels(labels, confidences):
+# Method: Used to get a list of unique class predictions
+def get_prediction_labels(labels, confidences):
+    """
+    :param labels: Predicted labels for each window
+    :param confidences: Predicted confidences for each window
+    :return: Top unique prediction labels
+    """
     unique_labels = list(set(labels))
     unique_max_conf = np.zeros(len(unique_labels))
 
@@ -31,7 +43,15 @@ def find_max_confidence_for_unique_labels(labels, confidences):
 
 
 # Method: Used to draw boxes around classified food items
-def draw_boxes_for_unique_labels(img, top_confidences, confidences, labels, windows):
+def draw_boxes_around_predictions(img, top_confidences, confidences, labels, windows):
+    """
+    :param img: Image file
+    :param top_confidences: Top prediction confidences
+    :param confidences: All prediction confidences
+    :param labels: All prediction labels
+    :param windows: All prediction windows
+    :return: Output image
+    """
     for i, confidence in enumerate(confidences):
         for j, top_confidence in enumerate(top_confidences):
             if confidence == top_confidence:
@@ -62,9 +82,9 @@ start_time = time.time()
 
 # File paths - GoogleNet
 model_path = 'models/bvlc_googlenet.caffemodel'
+prototxt_path = 'models/bvlc_googlenet.prototxt'
 image_path = 'images/image4.jpg'
 labels_path = 'image_net_labels.txt'
-prototxt_path = 'models/bvlc_googlenet.prototxt'
 
 # Other variables
 prediction_labels, prediction_confs, prediction_winds = [], [], []
@@ -119,14 +139,14 @@ for win_size in [(150, 150), (225, 225), (300, 300)]:  # Sorry, not sorry! (far 
             time.sleep(0.025)
 
 # Get the labels to be sent to
-msg_labels, msg_confs = find_max_confidence_for_unique_labels(prediction_labels, prediction_confs)
+msg_labels, msg_confs = get_prediction_labels(prediction_labels, prediction_confs)
 
 # Draw boxes for top predictions on the image
-draw_boxes_for_unique_labels(img=image,
-                             top_confidences=msg_confs,
-                             confidences=prediction_confs,
-                             labels=prediction_labels,
-                             windows=prediction_winds)
+draw_boxes_around_predictions(img=image,
+                              top_confidences=msg_confs,
+                              confidences=prediction_confs,
+                              labels=prediction_labels,
+                              windows=prediction_winds)
 
 # Upload classified file to DropBox
 db.upload_files(local_dir='C://PythonProjects/PantryPal/output/', dbox_dir='/')

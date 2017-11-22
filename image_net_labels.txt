@@ -438,8 +438,8 @@ n02814533 beach wagon, station wagon, wagon, estate car, beach waggon, station w
 n02814860 beacon, lighthouse, beacon light, pharos
 n02815834 beaker
 n02817516 bearskin, busby, shako
-n02823428 beer bottle
-n02823750 beer glass
+n02823428 beer
+n02823750 beer
 n02825657 bell cote, bell cot
 n02834397 bib
 n02835271 bicycle-built-for-two, tandem bicycle, tandem
@@ -453,7 +453,7 @@ n02865351 bolo tie, bolo, bola tie, bola
 n02869837 bonnet, poke bonnet
 n02870880 bookcase
 n02871525 bookshop, bookstore, bookstall
-n02877765 bottlecap
+n02877765 beer
 n02879718 bow
 n02883205 bow tie, bow-tie, bowtie
 n02892201 brass, memorial tablet, plaque
@@ -905,7 +905,7 @@ n04584207 wig
 n04589890 window screen
 n04590129 window shade
 n04591157 Windsor tie
-n04591713 wine bottle
+n04591713 wine
 n04592741 wing
 n04596742 wok
 n04597913 wooden spoon

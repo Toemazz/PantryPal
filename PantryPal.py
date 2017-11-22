@@ -1,8 +1,10 @@
 import cv2
 import time
+import json
 import numpy as np
 import Dropbox as db
 from string import capwords
+from pubnub import Pubnub
 
 
 # Method: Used to slide across the image at a specified height
@@ -66,24 +68,99 @@ def draw_boxes_around_predictions(img, top_confidences, confidences, labels, win
 
 
 # Method: Used to send a string with the predictions to PubNub
-def send_message_to_pubnub(top_labels, top_confs):
-    pubnub_msg = ''
+def send_message_to_pubnub(top_labels):
+    msg = ''
 
-    # Generate PubNub message
-    for i in np.arange(len(top_labels)):
-        pubnub_msg += capwords(top_labels[i]) + ','
+    if top_labels:
+        # Generate PubNub message
+        for i in np.arange(len(top_labels)):
+            msg += capwords(top_labels[i]) + ','
+    else:
+        msg = 'No items detected! :( Please double check the image!'
 
-    # TODO: Figure out how to send the string to PubNub
-    print(pubnub_msg)
+    json_msg = json.dumps(msg)
+    channel = 'PantryPalToPhone'
+
+    pubnub.publish(channel=channel, message=json_msg)
 
 
-# Start time
-start_time = time.time()
+def classification(message, channel):
+    print('[INFO]: Classification starting....')
+    image = load_image('images/image1.jpg')
+    # Start time
+    start_time = time.time()
+
+    for win_size in [(150, 150), (225, 225), (300, 300)]:  # Sorry, not sorry! (far from ideal)
+        for (x, y, window) in sliding_window(image, step_size=100, win_size=win_size):
+            # If the window does not meet our desired window size, ignore it
+            if window.shape[0] != win_size[0] or window.shape[1] != win_size[1]:
+                continue
+
+            # GoogleNet CNN required fixed dimensions for our input image (224x224)
+            # Mean subtraction is performed to normalize the input (104, 117, 123)
+            blob = cv2.dnn.blobFromImage(window, 1, (224, 224), (104, 117, 123))
+
+            # Set the blob as an input to the network
+            net.setInput(blob)
+
+            # Perform a forward-pass to obtain our output classification
+            predictions = net.forward()
+
+            # Get top prediction
+            predictions = predictions.reshape((1, len(classes)))
+            best_index = int(np.argsort(predictions[0])[::-1][0])
+
+            # Only save prediction information if prediction confidence is > 60%
+            if predictions[0][best_index] > 0.6:
+                prediction_labels.append(classes[best_index])
+                prediction_confs.append(predictions[0][best_index] * 100)
+                prediction_winds.append((x, y, win_size))
+
+            # Decide to display sliding window illustration or not
+            if display:
+                clone = image.copy()
+                cv2.rectangle(clone, (x, y), (x + win_size[0], y + win_size[1]), (0, 255, 0), 2)
+                cv2.imshow("Window", clone)
+                cv2.waitKey(1)
+                time.sleep(0.025)
+
+    # Get the labels to be sent to
+    top_labels, top_confs = get_prediction_labels(prediction_labels, prediction_confs)
+
+    # Draw boxes for top predictions on the image
+    draw_boxes_around_predictions(img=image,
+                                  top_confidences=top_confs,
+                                  confidences=prediction_confs,
+                                  labels=prediction_labels,
+                                  windows=prediction_winds)
+
+    # Upload classified file to DropBox
+    db.delete_files_from_dropbox_dir(dbox_dir='')
+    db.upload_files(local_dir='C://PythonProjects/PantryPal/output/', dbox_dir='/')
+
+    # Send prediction to PubNub
+    send_message_to_pubnub(top_labels=top_labels)
+
+    # Calculate total execution time
+    total_time = time.time() - start_time
+    print('[INFO]: Execution time: {0:.2f}s'.format(total_time))
+
+
+def load_image(img_path):
+    # Load image
+    image = cv2.imread(img_path)
+    image = image.copy()
+
+    return image
+
+
+# Connect to PubNub
+pubnub = Pubnub(publish_key="pub-c-935c97ba-71d6-4dd1-b500-e1ea1f85e0a5",
+                subscribe_key="sub-c-7ce45822-aff9-11e7-8f6d-3a18aff742a6")
 
 # File paths - GoogleNet
 model_path = 'models/bvlc_googlenet.caffemodel'
 prototxt_path = 'models/bvlc_googlenet.prototxt'
-image_path = 'images/image4.jpg'
 labels_path = 'image_net_labels.txt'
 
 # Other variables
@@ -93,67 +170,10 @@ display = False
 # Load labels
 rows = open(labels_path).read().strip().split("\n")
 classes = [r[r.find(" ") + 1:].split(",")[0] for r in rows]
-print('[INFO]: Labels loaded')
-
-# Load image
-image = cv2.imread(image_path)
-image = image.copy()
-print('[INFO]: Image loaded')
 
 # Load model
 net = cv2.dnn.readNetFromCaffe(prototxt_path, model_path)
-print('[INFO]: Model loaded')
 
-for win_size in [(150, 150), (225, 225), (300, 300)]:  # Sorry, not sorry! (far from ideal)
-    for (x, y, window) in sliding_window(image, step_size=100, win_size=win_size):
-        # If the window does not meet our desired window size, ignore it
-        if window.shape[0] != win_size[0] or window.shape[1] != win_size[1]:
-            continue
-
-        # GoogleNet CNN required fixed dimensions for our input image (224x224)
-        # Mean subtraction is performed to normalize the input (104, 117, 123)
-        blob = cv2.dnn.blobFromImage(window, 1, (224, 224), (104, 117, 123))
-
-        # Set the blob as an input to the network
-        net.setInput(blob)
-
-        # Perform a forward-pass to obtain our output classification
-        predictions = net.forward()
-
-        # Get top prediction
-        predictions = predictions.reshape((1, len(classes)))
-        top_prediction_index = int(np.argsort(predictions[0])[::-1][:1])
-
-        # Only save prediction information if prediction confidence is > 60%
-        if predictions[0][top_prediction_index] > 0.6:
-            prediction_labels.append(classes[top_prediction_index])
-            prediction_confs.append(predictions[0][top_prediction_index] * 100)
-            prediction_winds.append((x, y, win_size))
-
-        # Decide to display sliding window illustration or not
-        if display:
-            clone = image.copy()
-            cv2.rectangle(clone, (x, y), (x + win_size[0], y + win_size[1]), (0, 255, 0), 2)
-            cv2.imshow("Window", clone)
-            cv2.waitKey(1)
-            time.sleep(0.025)
-
-# Get the labels to be sent to
-msg_labels, msg_confs = get_prediction_labels(prediction_labels, prediction_confs)
-
-# Draw boxes for top predictions on the image
-draw_boxes_around_predictions(img=image,
-                              top_confidences=msg_confs,
-                              confidences=prediction_confs,
-                              labels=prediction_labels,
-                              windows=prediction_winds)
-
-# Upload classified file to DropBox
-db.upload_files(local_dir='C://PythonProjects/PantryPal/output/', dbox_dir='/')
-
-# Send prediction to PubNub
-send_message_to_pubnub(top_labels=msg_labels, top_confs=msg_confs)
-
-# Calculate total execution time
-total_time = time.time() - start_time
-print('Execution time: {0:.2f}s'.format(total_time))
+# Subscribe to PubNub
+pubnub.subscribe(channels="PhoneToPantryPal", callback=classification)
+print('[INFO]: Subscribed to PubNub')

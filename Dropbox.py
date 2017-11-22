@@ -38,7 +38,6 @@ def get_files_from_local_dir(file_dir):
             for file in files:
                 temp_root = "/".join(root.strip("/").split('/')[1:])
                 files_to_upload.append(os.path.join(temp_root, file))
-        print("Files to upload got from local directory")
         return files_to_upload
     # Return empty list if the file directory does not exist
     else:
@@ -62,7 +61,7 @@ def get_files_from_dropbox_dir(dbox_dir):
         path = path.replace("\\", "/")
 
     try:
-        response = dbox.files_list_folder(path, recursive=True)
+        response = dbox.files_list_folder(path)
     except dropbox.exceptions.ApiError:
         print("Unable to get files for download")
         sys.exit(0)
@@ -71,7 +70,6 @@ def get_files_from_dropbox_dir(dbox_dir):
         down_files = []
         for entry in response.entries:
             down_files.append(entry.path_display)
-        print("Files downloaded from DropBox")
         return down_files
 
 
@@ -119,7 +117,7 @@ def upload_files(local_dir, dbox_dir):
             try:
                 mode = dropbox.files.WriteMode.add
                 dbox.files_upload(up_file_data, path=path, mode=mode, mute=True)
-                print("UPLOADED\t", up_file)
+                print("[INFO]: Uploaded {}".format(up_file))
                 logging.info(up_file + " uploaded to " + path)
             except dropbox.exceptions.ApiError:
                 logging.info(up_file + " unable to be uploaded")

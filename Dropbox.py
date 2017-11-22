@@ -3,11 +3,8 @@
 # Date: 26/01/2017
 import os
 import sys
-import logging
 import dropbox
 from dropbox.files import FileMetadata
-
-logging.basicConfig(filename="PantryPal.log", level=logging.INFO)
 
 
 # Method: Used to get the DropBox token for accessing remote directory
@@ -118,10 +115,8 @@ def upload_files(local_dir, dbox_dir):
                 mode = dropbox.files.WriteMode.add
                 dbox.files_upload(up_file_data, path=path, mode=mode, mute=True)
                 print("[INFO]: Uploaded {}".format(up_file))
-                logging.info(up_file + " uploaded to " + path)
             except dropbox.exceptions.ApiError:
-                logging.info(up_file + " unable to be uploaded")
-        print("Files uploaded to DropBox")
+                print("[INFO]: Unable to upload {}".format(up_file))
 
 
 # Method: Used to download files from DropBox to local directory
@@ -144,7 +139,7 @@ def download_files(local_dir, dbox_dir):
         for down_file in down_files:
             try:
                 metadata, response = dbox.files_download(down_file)
-                logging.info(down_file + " downloaded to " + local_dir)
+
                 filename = down_file.split("/")[-1]
                 down_path = os.path.join(local_dir, down_file.split("/")[-2])
 
@@ -154,12 +149,11 @@ def download_files(local_dir, dbox_dir):
                 down_path_with_file = os.path.join(down_path, filename)
                 with open(down_path_with_file, "wb") as f:
                     f.write(response.content)
-                print("DOWNLOADED\t", down_path_with_file)
+                print("[INFO]: Downloaded {}".format(down_file))
             except dropbox.exceptions.HttpError:
-                logging.error(down_file + " unable to be downloaded")
+                print("[INFO]: Unable to download {}".format(down_file))
             except dropbox.exceptions.ApiError:
                 pass
-        print("Files downloaded from DropBox")
 
 
 # Method: Used to delete files from DropBox directory
@@ -186,8 +180,7 @@ def delete_files_from_dropbox_dir(dbox_dir):
             try:
                 dbox.files_delete(del_path)
             except dropbox.exceptions.ApiError:
-                logging.info(del_file + " unable to be deleted")
-        print("Files deleted from DropBox directory")
+                print("[INFO]: Unable to delete {}".format(del_file))
 
 
 # Method: Used to delete files from local directory
@@ -204,5 +197,5 @@ def delete_files_from_local_dir(local_dir):
             try:
                 os.remove(del_path)
             except OSError:
-                logging.info(del_file + " unable to be deleted")
+                print("[INFO]: Unable to delete {}".format(del_file))
         print("Files deleted from local directory")

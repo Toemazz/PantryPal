@@ -1,3 +1,4 @@
+import os
 import cv2
 import time
 import json
@@ -84,9 +85,35 @@ def send_message_to_pubnub(top_labels):
     pubnub.publish(channel=channel, message=json_msg)
 
 
+# Method: Used to get the image for classification
+def get_image(img_path, capture=False):
+    """
+    :param img_path: Path to image if loading
+    :param capture: True = Capture image, False = Load Image
+    :return:
+    """
+    img_name = 'pantry.jpg'
+
+    # Capture image
+    if capture:
+        # TODO: Capture image from Raspberry Pi Camera
+        image = None
+    # Load image
+    else:
+        image = cv2.imread(img_path)
+
+    return image
+
+
+# Method: Used to classify the contents of the captured image
 def classification(message, channel):
+    """
+    :param message: Required for PubNub
+    :param channel: Required for PubNub
+    :return: Classified image for DropBox and message for PubNub
+    """
     print('[INFO]: Classification starting....')
-    image = load_image('images/image1.jpg')
+    image = get_image(img_path='images/image3.jpg')
     # Start time
     start_time = time.time()
 
@@ -111,7 +138,7 @@ def classification(message, channel):
             best_index = int(np.argsort(predictions[0])[::-1][0])
 
             # Only save prediction information if prediction confidence is > 60%
-            if predictions[0][best_index] > 0.6:
+            if predictions[0][best_index] > 0.5 and classes[best_index] != 'NotFood':
                 prediction_labels.append(classes[best_index])
                 prediction_confs.append(predictions[0][best_index] * 100)
                 prediction_winds.append((x, y, win_size))
@@ -123,6 +150,10 @@ def classification(message, channel):
                 cv2.imshow("Window", clone)
                 cv2.waitKey(1)
                 time.sleep(0.025)
+
+    # Calculate total classification time
+    total_time = time.time() - start_time
+    print('[INFO]: Classification time: {0:.2f}s'.format(total_time))
 
     # Get the labels to be sent to
     top_labels, top_confs = get_prediction_labels(prediction_labels, prediction_confs)
@@ -140,18 +171,7 @@ def classification(message, channel):
 
     # Send prediction to PubNub
     send_message_to_pubnub(top_labels=top_labels)
-
-    # Calculate total execution time
-    total_time = time.time() - start_time
-    print('[INFO]: Execution time: {0:.2f}s'.format(total_time))
-
-
-def load_image(img_path):
-    # Load image
-    image = cv2.imread(img_path)
-    image = image.copy()
-
-    return image
+    print('[INFO]: Message sent to PubNub')
 
 
 # Connect to PubNub
@@ -161,7 +181,7 @@ pubnub = Pubnub(publish_key="pub-c-935c97ba-71d6-4dd1-b500-e1ea1f85e0a5",
 # File paths - GoogleNet
 model_path = 'models/bvlc_googlenet.caffemodel'
 prototxt_path = 'models/bvlc_googlenet.prototxt'
-labels_path = 'image_net_labels.txt'
+labels_path = 'modified_image_net_labels.txt'
 
 # Other variables
 prediction_labels, prediction_confs, prediction_winds = [], [], []
@@ -169,7 +189,7 @@ display = False
 
 # Load labels
 rows = open(labels_path).read().strip().split("\n")
-classes = [r[r.find(" ") + 1:].split(",")[0] for r in rows]
+classes = [r[r.find(" ") + 1:].split(",")[0].strip() for r in rows]
 
 # Load model
 net = cv2.dnn.readNetFromCaffe(prototxt_path, model_path)
@@ -177,3 +197,4 @@ net = cv2.dnn.readNetFromCaffe(prototxt_path, model_path)
 # Subscribe to PubNub
 pubnub.subscribe(channels="PhoneToPantryPal", callback=classification)
 print('[INFO]: Subscribed to PubNub')
+# classification('', '')

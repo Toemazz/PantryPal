@@ -9,7 +9,7 @@ from pubnub import Pubnub
 
 
 # Method: Used to slide across the image at a specified height
-def sliding_window(img, step_size=20, win_size=(200, 200), crop_size=(200, 200)):
+def sliding_window(img, win_size, step_size=20, crop_size=(0, 0)):
     """
     :param img: Image file
     :param step_size: Step size
@@ -18,7 +18,7 @@ def sliding_window(img, step_size=20, win_size=(200, 200), crop_size=(200, 200))
     :return: (x, y, window)
     """
     # Slide a window across the image
-    for y in np.arange(crop_size[0], img.shape[0]-crop_size[0], step_size):
+    for y in np.arange(crop_size[0], img.shape[0]-crop_size[0], step_size*2):
         for x in np.arange(crop_size[1], img.shape[1]-crop_size[1], step_size):
             # Yield the current window
             yield (x, y, img[y:y + win_size[1], x:x + win_size[0]])
@@ -62,10 +62,10 @@ def draw_boxes_around_predictions(img, top_confidences, confidences, labels, win
                 wind = windows[i]
                 x, y, size = wind[0], wind[1], wind[2]
                 cv2.rectangle(img=img, pt1=(x, y), pt2=(x+size[0], y+size[1]), color=(0, 255, 0))
-                cv2.putText(img=img, text='{}: {:.2f}'.format(labels[i], float(confidences[i])), org=(x, y),
+                cv2.putText(img=img, text='{}'.format(labels[i]), org=(x, y),
                             color=(0, 255, 0), fontFace=cv2.FONT_HERSHEY_PLAIN, fontScale=1)
 
-    cv2.imwrite("output/pantry.jpg", img)
+    return img
 
 
 # Method: Used to send a string with the predictions to PubNub
@@ -75,7 +75,7 @@ def send_message_to_pubnub(top_labels):
     if top_labels:
         # Generate PubNub message
         for i in np.arange(len(top_labels)):
-            msg += capwords(top_labels[i]) + ','
+            msg += top_labels[i] + ','
     else:
         msg = 'No items detected! :( Please double check the image!'
 
@@ -92,13 +92,18 @@ def get_image(img_path, capture=False):
     :param capture: True = Capture image, False = Load Image
     :return:
     """
-    img_name = 'pantry.jpg'
-
-    # Capture image
+    # Capture image from Raspberry Pi
     if capture:
-        # TODO: Capture image from Raspberry Pi Camera
-        image = None
-    # Load image
+        import picamera
+
+        save_path = 'images/image.jpg'
+
+        camera = picamera.PiCamera()
+        camera.resolution = (1024, 768)
+        time.sleep(2)
+        camera.capture(save_path)
+        image = cv2.imread(save_path)
+    # Load image from disk
     else:
         image = cv2.imread(img_path)
 
@@ -113,12 +118,12 @@ def classification(message, channel):
     :return: Classified image for DropBox and message for PubNub
     """
     print('[INFO]: Classification starting....')
-    image = get_image(img_path='images/image3.jpg')
+    image = get_image(img_path='images/16.jpg', capture=capture)
     # Start time
     start_time = time.time()
 
-    for win_size in [(150, 150), (225, 225), (300, 300)]:  # Sorry, not sorry! (far from ideal)
-        for (x, y, window) in sliding_window(image, step_size=100, win_size=win_size):
+    for win_size in np.array([(220, 220), (280, 280), (360, 360), (420, 420)]):  # Sorry, not sorry!
+        for (x, y, window) in sliding_window(image, win_size, step_size=60, crop_size=(50, 50)):
             # If the window does not meet our desired window size, ignore it
             if window.shape[0] != win_size[0] or window.shape[1] != win_size[1]:
                 continue
@@ -137,8 +142,8 @@ def classification(message, channel):
             predictions = predictions.reshape((1, len(classes)))
             best_index = int(np.argsort(predictions[0])[::-1][0])
 
-            # Only save prediction information if prediction confidence is > 60%
-            if predictions[0][best_index] > 0.5 and classes[best_index] != 'NotFood':
+            # Only save prediction information if prediction confidence is > 50% and it's 'NotFood'
+            if classes[best_index] != 'Notfood' and predictions[0][best_index] >= 0.5:
                 prediction_labels.append(classes[best_index])
                 prediction_confs.append(predictions[0][best_index] * 100)
                 prediction_winds.append((x, y, win_size))
@@ -155,15 +160,18 @@ def classification(message, channel):
     total_time = time.time() - start_time
     print('[INFO]: Classification time: {0:.2f}s'.format(total_time))
 
-    # Get the labels to be sent to
+    # Get the labels to be sent to PubNub
     top_labels, top_confs = get_prediction_labels(prediction_labels, prediction_confs)
 
     # Draw boxes for top predictions on the image
-    draw_boxes_around_predictions(img=image,
-                                  top_confidences=top_confs,
-                                  confidences=prediction_confs,
-                                  labels=prediction_labels,
-                                  windows=prediction_winds)
+    classified_image = draw_boxes_around_predictions(img=image,
+                                                     top_confidences=top_confs,
+                                                     confidences=prediction_confs,
+                                                     labels=prediction_labels,
+                                                     windows=prediction_winds)
+
+    # Save image
+    cv2.imwrite("output/pantry.jpg", classified_image)
 
     # Upload classified file to DropBox
     db.delete_files_from_dropbox_dir(dbox_dir='')
@@ -172,6 +180,7 @@ def classification(message, channel):
     # Send prediction to PubNub
     send_message_to_pubnub(top_labels=top_labels)
     print('[INFO]: Message sent to PubNub')
+    print('[INFO]: Ready to classify....')
 
 
 # Connect to PubNub
@@ -186,10 +195,11 @@ labels_path = 'modified_image_net_labels.txt'
 # Other variables
 prediction_labels, prediction_confs, prediction_winds = [], [], []
 display = False
+capture = False
 
 # Load labels
 rows = open(labels_path).read().strip().split("\n")
-classes = [r[r.find(" ") + 1:].split(",")[0].strip() for r in rows]
+classes = [capwords(r[r.find(" ") + 1:].split(",")[0].strip()) for r in rows]
 
 # Load model
 net = cv2.dnn.readNetFromCaffe(prototxt_path, model_path)
@@ -197,4 +207,3 @@ net = cv2.dnn.readNetFromCaffe(prototxt_path, model_path)
 # Subscribe to PubNub
 pubnub.subscribe(channels="PhoneToPantryPal", callback=classification)
 print('[INFO]: Subscribed to PubNub')
-# classification('', '')

@@ -520,7 +520,7 @@ n03127747 crash helmet
 n03127925 crate
 n03131574 crib, cot
 n03133878 Crock Pot
-n03134739 orange, croquet ball
+n03134739 orange
 n03141823 crutch
 n03146219 cuirass
 n03160309 dam, dike, dyke

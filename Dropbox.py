@@ -179,6 +179,7 @@ def delete_files_from_dropbox_dir(dbox_dir):
 
             try:
                 dbox.files_delete(del_path)
+                print('[INFO]: Deleted {}'.format(del_path))
             except dropbox.exceptions.ApiError:
                 print("[INFO]: Unable to delete {}".format(del_file))
 

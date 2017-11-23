@@ -520,7 +520,7 @@ NotFood  NotFood
 NotFood  NotFood
 NotFood  NotFood
 NotFood  NotFood
-NotFood  NotFood
+n03134739 orange
 NotFood  NotFood
 NotFood  NotFood
 NotFood  NotFood
@@ -944,7 +944,7 @@ n07717556 butternut squash
 n07718472 cucumber
 n07718747 artichoke
 n07720875 bell pepper
-n07730033 cardoon
+NotFood  NotFood
 n07734744 mushroom
 n07742313 apple
 n07745940 strawberry
@@ -964,7 +964,7 @@ NotFood  NotFood
 n07873807 pizza
 NotFood  NotFood
 NotFood  NotFood
-n07892512 red wine
+n07892512 wine
 NotFood  NotFood
 NotFood  NotFood
 NotFood  NotFood

@@ -169,7 +169,7 @@ def delete_files_from_dropbox_dir(dbox_dir):
     del_files = get_files_from_dropbox_dir(dbox_dir)
 
     if len(del_files) == 0:
-        print("No files in DropBox directory to be deleted")
+        print("[INFO]: No files in DropBox directory to be deleted")
     else:
         # Delete each file from DropBox
         for del_file in del_files:
@@ -190,7 +190,7 @@ def delete_files_from_local_dir(local_dir):
     :param local_dir: Local directory
     """
     if len(os.listdir(local_dir)) == 0:
-        print("No files to be deleted from the local directory")
+        print("[INFO]: No files to be deleted from the local directory")
     else:
         # Delete files from local directory
         for del_file in os.listdir(local_dir):
@@ -256,3 +256,23 @@ def upload_single_file_to_dropbox(local_file_path, dbox_dir):
         print("[INFO]: Uploaded {}".format(local_file_path))
     except dropbox.exceptions.ApiError:
         print("[INFO]: Unable to upload {}".format(local_file_path))
+
+
+# Method: Used to delete files from DropBox directory
+def delete_single_file_from_dropbox(file_name, dbox_dir):
+    """
+    :param dbox_dir: DropBox directory
+    """
+    # Get token and set up DropBox connection
+    token = get_dropbox_token()
+    dbox = dropbox.Dropbox(token)
+
+    del_path = os.path.join(dbox_dir, file_name)
+    if "//" in del_path:
+        del_path = del_path.replace("//", "/")
+
+    try:
+        dbox.files_delete(del_path)
+        print('[INFO]: Deleted {}'.format(del_path))
+    except dropbox.exceptions.ApiError:
+        print("[INFO]: Unable to delete {}".format(del_path))

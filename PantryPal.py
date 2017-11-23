@@ -97,7 +97,7 @@ def get_image(local_dir, dbox_path):
     :return: Image file
     """
     # Download file
-    db.download_single_file_from_dropbox(local_dir=local_dir, dbox_path=dbox_path)
+    db.download_single_file_from_dropbox(local_dir=local_dir, dbox_dir=dbox_path)
 
     if '/' in dbox_path:
         dbox_path = dbox_path.strip('/')
@@ -175,8 +175,8 @@ def classification(message, channel):
     cv2.imwrite("output/pantry.jpg", classified_image)
 
     # Upload classified file to DropBox
-    db.delete_files_from_dropbox_dir(dbox_dir='')
-    db.upload_files(local_dir='C://PythonProjects/PantryPal/output/', dbox_dir='/')
+    db.delete_single_file_from_dropbox('pantry.jpg', '/')
+    db.upload_single_file_to_dropbox('C://PythonProjects/PantryPal/output/pantry.jpg', '/')
 
     # Send prediction to PubNub
     send_message_to_pubnub(top_labels=top_labels)

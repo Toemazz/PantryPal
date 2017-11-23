@@ -200,3 +200,59 @@ def delete_files_from_local_dir(local_dir):
             except OSError:
                 print("[INFO]: Unable to delete {}".format(del_file))
         print("Files deleted from local directory")
+
+
+# Method: Used to download a single file from DropBox
+def download_single_file_from_dropbox(local_dir, dbox_dir):
+    """
+    :param local_dir: Local directory
+    :param dbox_dir: DropBox directory
+    """
+    # Get token and set up dropbox connection
+    token = get_dropbox_token()
+    dbox = dropbox.Dropbox(token)
+
+    try:
+        metadata, response = dbox.files_download(dbox_dir)
+
+        filename = dbox_dir.split("/")[-1]
+        down_path = os.path.join(local_dir, dbox_dir.split("/")[-2])
+
+        if not os.path.exists(down_path):
+            os.mkdir(down_path)
+
+        down_path_with_file = os.path.join(down_path, filename)
+        with open(down_path_with_file, "wb") as f:
+            f.write(response.content)
+        print("[INFO]: Downloaded {}".format(dbox_dir))
+    except dropbox.exceptions.HttpError:
+        print("[INFO]: Unable to download {}".format(dbox_dir))
+    except dropbox.exceptions.ApiError:
+        pass
+
+
+# Method: Used to upload a single file to DropBox
+def upload_single_file_to_dropbox(local_file_path, dbox_dir):
+    """
+    :param local_file_path: Local Directory
+    :param dbox_dir: DropBox Directory
+    """
+    # Get token and set up DropBox connection
+    token = get_dropbox_token()
+    dbox = dropbox.Dropbox(token)
+
+    # Get files from local directory to upload
+    path = os.path.join(dbox_dir, os.path.basename(local_file_path))
+    if "//" in path:
+        path = path.replace("//", "/")
+    if "\\" in path:
+        path = path.replace("\\", "/")
+
+    up_file_data = get_file_data(local_file_path)
+
+    try:
+        mode = dropbox.files.WriteMode.add
+        dbox.files_upload(up_file_data, path=path, mode=mode, mute=True)
+        print("[INFO]: Uploaded {}".format(local_file_path))
+    except dropbox.exceptions.ApiError:
+        print("[INFO]: Unable to upload {}".format(local_file_path))

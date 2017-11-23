@@ -2,16 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="70aeb9a0-a649-48dd-87c8-19cd8788dbaa" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/image1.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/image2.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/image3.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/image4.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/output/pantry.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/01.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/02.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/03.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/04.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/05.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/06.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/07.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/08.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/09.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/10.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/11.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/12.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/13.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/14.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/15.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/16.jpg" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/pantry.jpg" afterPath="$PROJECT_DIR$/output/pantry.jpg" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dropbox.py" afterPath="$PROJECT_DIR$/Dropbox.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PantryPal.py" afterPath="$PROJECT_DIR$/PantryPal.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/image_net_labels.txt" afterPath="$PROJECT_DIR$/image_net_labels.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modified_image_net_labels.txt" afterPath="$PROJECT_DIR$/modified_image_net_labels.txt" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -24,43 +34,32 @@
     <SUITE FILE_PATH="coverage/PantryPal$pyramid.coverage" NAME="pyramid Coverage Results" MODIFIED="1510311299661" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PantryPal$pi_deep_learning.coverage" NAME="pi_deep_learning Coverage Results" MODIFIED="1510251206068" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PantryPal$sliding_window.coverage" NAME="sliding_window Coverage Results" MODIFIED="1510329356353" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PantryPal$Test__1_.coverage" NAME="Test (1) Coverage Results" MODIFIED="1511464303589" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/.idea" />
     <SUITE FILE_PATH="coverage/PantryPal$dnn.coverage" NAME="dnn Coverage Results" MODIFIED="1510330344152" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PantryPal$Tets.coverage" NAME="Tets Coverage Results" MODIFIED="1511367032904" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PantryPal$Dropbox.coverage" NAME="Dropbox Coverage Results" MODIFIED="1511366530539" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/PantryPal$Test.coverage" NAME="Test Coverage Results" MODIFIED="1511375755559" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/PantryPal$PantryPal.coverage" NAME="PantryPal Coverage Results" MODIFIED="1511444996047" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PantryPal$Test.coverage" NAME="Test Coverage Results" MODIFIED="1511465284851" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PantryPal$PantryPal.coverage" NAME="PantryPal Coverage Results" MODIFIED="1511471574995" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PantryPal$test.coverage" NAME="test Coverage Results" MODIFIED="1511472360318" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="PantryPal.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/PantryPal.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="341">
-              <caret line="180" column="49" lean-forward="true" selection-start-line="180" selection-start-column="49" selection-end-line="180" selection-end-column="49" />
+            <state relative-caret-position="113">
+              <caret line="112" column="37" lean-forward="false" selection-start-line="112" selection-start-column="37" selection-end-line="112" selection-end-column="37" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
                 <element signature="e#275#781#0" expanded="false" />
                 <element signature="e#890#1504#0" expanded="false" />
                 <element signature="e#1656#2503#0" expanded="false" />
-                <element signature="e#2613#2958#0" expanded="false" />
-                <element signature="e#3056#3569#0" expanded="false" />
-                <element signature="e#4204#5711#0" expanded="false" />
+                <element signature="e#2613#3128#0" expanded="false" />
+                <element signature="e#3236#3660#0" expanded="false" />
+                <element signature="e#3767#6937#0" expanded="false" />
+                <element signature="e#4341#5848#0" expanded="false" />
               </folding>
             </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="16_pantry.jpg" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/16_pantry.jpg">
-          <provider selected="true" editor-type-id="images">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="15_pantry.jpg" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/15_pantry.jpg">
-          <provider selected="true" editor-type-id="images">
-            <state />
           </provider>
         </entry>
       </file>
@@ -85,6 +84,7 @@
       <find>tomato</find>
       <find>che</find>
       <find>winw</find>
+      <find>pub</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -113,11 +113,13 @@
         <option value="$PROJECT_DIR$/labels.txt" />
         <option value="$PROJECT_DIR$/labels_ordered.txt" />
         <option value="$PROJECT_DIR$/labels_ordered_copy_out.txt" />
-        <option value="$PROJECT_DIR$/Test.py" />
         <option value="$PROJECT_DIR$/image_net_labels.txt" />
         <option value="$PROJECT_DIR$/modified_image_net_labels.txt" />
-        <option value="$PROJECT_DIR$/Dropbox.py" />
+        <option value="$PROJECT_DIR$/.idea/Test.py" />
+        <option value="$PROJECT_DIR$/Test.py" />
         <option value="$PROJECT_DIR$/PantryPal.py" />
+        <option value="$PROJECT_DIR$/test.py" />
+        <option value="$PROJECT_DIR$/Dropbox.py" />
       </list>
     </option>
   </component>
@@ -155,11 +157,6 @@
               <item name="PantryPal" type="b2602c69:ProjectViewProjectNode" />
               <item name="PantryPal" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="PantryPal" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PantryPal" type="462c0819:PsiDirectoryNode" />
-              <item name="output" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -170,7 +167,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../PantryPi" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -198,25 +195,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.PantryPal">
-    <configuration name="Dropbox" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="PantryPal" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Dropbox.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-    </configuration>
+  <component name="RunManager" selected="Python.test">
     <configuration name="PantryPal" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -231,6 +210,24 @@
       <module name="PantryPal" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/PantryPal.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+    </configuration>
+    <configuration name="Test (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/.idea" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="PantryPal" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/.idea/Test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -271,7 +268,7 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
-    <configuration name="dnn" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -284,25 +281,25 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="PantryPal" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/dnn.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.PantryPal" />
-      <item index="1" class="java.lang.String" itemvalue="Python.dnn" />
-      <item index="2" class="java.lang.String" itemvalue="Python.Test" />
-      <item index="3" class="java.lang.String" itemvalue="Python.Dropbox" />
-      <item index="4" class="java.lang.String" itemvalue="Python.Tets" />
+      <item index="1" class="java.lang.String" itemvalue="Python.Test" />
+      <item index="2" class="java.lang.String" itemvalue="Python.Tets" />
+      <item index="3" class="java.lang.String" itemvalue="Python.Test (1)" />
+      <item index="4" class="java.lang.String" itemvalue="Python.test" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.PantryPal" />
-        <item index="1" class="java.lang.String" itemvalue="Python.Test" />
-        <item index="2" class="java.lang.String" itemvalue="Python.Tets" />
-        <item index="3" class="java.lang.String" itemvalue="Python.Dropbox" />
-        <item index="4" class="java.lang.String" itemvalue="Python.dnn" />
+        <item index="0" class="java.lang.String" itemvalue="Python.test" />
+        <item index="1" class="java.lang.String" itemvalue="Python.PantryPal" />
+        <item index="2" class="java.lang.String" itemvalue="Python.Test" />
+        <item index="3" class="java.lang.String" itemvalue="Python.Test (1)" />
+        <item index="4" class="java.lang.String" itemvalue="Python.Tets" />
       </list>
     </recent_temporary>
   </component>
@@ -330,7 +327,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23296355" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36133122" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1727672" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -355,7 +352,7 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34389856" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36133122" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1727672" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="combo" />
@@ -381,16 +378,7 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Pseudocode.txt" />
-    <entry file="file://$PROJECT_DIR$/image.jpg" />
     <entry file="file://$PROJECT_DIR$/PlasmaDevice.log" />
-    <entry file="file://$PROJECT_DIR$/token.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/PantryPal.log" />
     <entry file="file://$PROJECT_DIR$/models/squeezenet_v1.0.prototxt">
       <provider selected="true" editor-type-id="text-editor">
@@ -434,7 +422,6 @@
     <entry file="file://$PROJECT_DIR$/labels_ordered.txt" />
     <entry file="file://$PROJECT_DIR$/labels_ordered_copy_out.txt" />
     <entry file="file://$PROJECT_DIR$/labels_ordered_copy.txt" />
-    <entry file="file://$PROJECT_DIR$/Test.py" />
     <entry file="file://$PROJECT_DIR$/images/image2.jpg">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -521,11 +508,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/output/pantry.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/examples/05_pantry.jpg">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -571,19 +553,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Dropbox.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="181" column="58" lean-forward="false" selection-start-line="181" selection-start-column="58" selection-end-line="181" selection-end-column="58" />
-          <folding>
-            <element signature="e#271#500#0" expanded="false" />
-            <element signature="e#600#1206#0" expanded="false" />
-            <element signature="e#2095#2357#0" expanded="false" />
-            <element signature="e#5830#6345#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/examples/15_pantry.jpg">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -594,18 +563,73 @@
         <state />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/token.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/Test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/output/pantry.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/images/pantry.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" column="36" lean-forward="false" selection-start-line="2" selection-start-column="36" selection-end-line="2" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Dropbox.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1012">
+          <caret line="257" column="68" lean-forward="false" selection-start-line="257" selection-start-column="68" selection-end-line="257" selection-end-column="68" />
+          <folding>
+            <element signature="e#94#103#0" expanded="true" />
+            <element signature="e#271#500#0" expanded="false" />
+            <element signature="e#600#1206#0" expanded="false" />
+            <element signature="e#1315#2016#0" expanded="false" />
+            <element signature="e#2095#2357#0" expanded="false" />
+            <element signature="e#2468#3510#0" expanded="false" />
+            <element signature="e#3620#4809#0" expanded="false" />
+            <element signature="e#4912#5730#0" expanded="false" />
+            <element signature="e#6466#7294#0" expanded="false" />
+            <element signature="e#7410#8200#0" expanded="false" />
+            <marker date="1511472821124" expanded="false" signature="5825:6345" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/PantryPal.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="341">
-          <caret line="180" column="49" lean-forward="true" selection-start-line="180" selection-start-column="49" selection-end-line="180" selection-end-column="49" />
+        <state relative-caret-position="113">
+          <caret line="112" column="37" lean-forward="false" selection-start-line="112" selection-start-column="37" selection-end-line="112" selection-end-column="37" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
             <element signature="e#275#781#0" expanded="false" />
             <element signature="e#890#1504#0" expanded="false" />
             <element signature="e#1656#2503#0" expanded="false" />
-            <element signature="e#2613#2958#0" expanded="false" />
-            <element signature="e#3056#3569#0" expanded="false" />
-            <element signature="e#4204#5711#0" expanded="false" />
+            <element signature="e#2613#3128#0" expanded="false" />
+            <element signature="e#3236#3660#0" expanded="false" />
+            <element signature="e#3767#6937#0" expanded="false" />
+            <element signature="e#4341#5848#0" expanded="false" />
           </folding>
         </state>
       </provider>

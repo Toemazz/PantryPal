@@ -70,6 +70,10 @@ def draw_boxes_around_predictions(img, top_confidences, confidences, labels, win
 
 # Method: Used to send a string with the predictions to PubNub
 def send_message_to_pubnub(top_labels):
+    """
+    :param top_labels: List of top predictions
+    :return: Sent message to PubNub
+    """
     msg = ''
 
     if top_labels:
@@ -81,33 +85,28 @@ def send_message_to_pubnub(top_labels):
 
     json_msg = json.dumps(msg)
     channel = 'PantryPalToPhone'
+    pubnub.publish(channel='PantryPalToPhone', message=json_msg)
+    print('[INFO]: Published message to {}'.format(channel))
 
-    pubnub.publish(channel=channel, message=json_msg)
 
-
-# Method: Used to get the image for classification
-def get_image(img_path, capture=False):
+# Method: Used to get the image for classification from DropBox
+def get_image(local_dir, dbox_path):
     """
-    :param img_path: Path to image if loading
-    :param capture: True = Capture image, False = Load Image
-    :return:
+    :param local_dir: Location to save downloaded image
+    :param dbox_path: Path to DropBox directory
+    :return: Image file
     """
-    # Capture image from Raspberry Pi
-    if capture:
-        import picamera
+    # Download file
+    db.download_single_file_from_dropbox(local_dir=local_dir, dbox_path=dbox_path)
 
-        save_path = 'images/image.jpg'
+    if '/' in dbox_path:
+        dbox_path = dbox_path.strip('/')
 
-        camera = picamera.PiCamera()
-        camera.resolution = (1024, 768)
-        time.sleep(2)
-        camera.capture(save_path)
-        image = cv2.imread(save_path)
-    # Load image from disk
-    else:
-        image = cv2.imread(img_path)
+    # Load image
+    img_path = os.path.join(local_dir, dbox_path)
+    img = cv2.imread(img_path)
 
-    return image
+    return img
 
 
 # Method: Used to classify the contents of the captured image
@@ -117,10 +116,12 @@ def classification(message, channel):
     :param channel: Required for PubNub
     :return: Classified image for DropBox and message for PubNub
     """
-    print('[INFO]: Classification starting....')
-    image = get_image(img_path='images/16.jpg', capture=capture)
+    # Get image to be downloaded from DropBox
+    image = get_image(local_dir=local_dir, dbox_path=dbox_path)
+
     # Start time
     start_time = time.time()
+    print('[INFO]: Classification starting....')
 
     for win_size in np.array([(220, 220), (280, 280), (360, 360), (420, 420)]):  # Sorry, not sorry!
         for (x, y, window) in sliding_window(image, win_size, step_size=60, crop_size=(50, 50)):
@@ -179,7 +180,6 @@ def classification(message, channel):
 
     # Send prediction to PubNub
     send_message_to_pubnub(top_labels=top_labels)
-    print('[INFO]: Message sent to PubNub')
     print('[INFO]: Ready to classify....')
 
 
@@ -191,11 +191,12 @@ pubnub = Pubnub(publish_key="pub-c-935c97ba-71d6-4dd1-b500-e1ea1f85e0a5",
 model_path = 'models/bvlc_googlenet.caffemodel'
 prototxt_path = 'models/bvlc_googlenet.prototxt'
 labels_path = 'modified_image_net_labels.txt'
+local_dir = 'C:/PythonProjects/PantryPal/output/'
+dbox_path = '/capture.jpg'
 
 # Other variables
 prediction_labels, prediction_confs, prediction_winds = [], [], []
 display = False
-capture = False
 
 # Load labels
 rows = open(labels_path).read().strip().split("\n")
@@ -205,5 +206,6 @@ classes = [capwords(r[r.find(" ") + 1:].split(",")[0].strip()) for r in rows]
 net = cv2.dnn.readNetFromCaffe(prototxt_path, model_path)
 
 # Subscribe to PubNub
-pubnub.subscribe(channels="PhoneToPantryPal", callback=classification)
-print('[INFO]: Subscribed to PubNub')
+channel = 'PiToPantryPal'
+pubnub.subscribe(channels=channel, callback=classification)
+print("[INFO]: Subscribed to PubNub on channel '{}'".format(channel))

@@ -180,7 +180,7 @@ def classification(message, channel):
 
     # Send prediction to PubNub
     send_message_to_pubnub(top_labels=top_labels)
-    print('[INFO]: Ready to classify....')
+    print('\n[INFO]: Ready to classify....')
 
 
 # Connect to PubNub

@@ -102,3 +102,6 @@ ENV/
 
 # JetBrains
 .idea/
+
+# DropBox Token
+token.txt
